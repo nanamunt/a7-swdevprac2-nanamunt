@@ -1,37 +1,55 @@
-import Image from "next/image";
-import InteractiveCard from "./InteractiveCard";
-import { Rating } from "@mui/material";
+"use client"
+import Image from 'next/image'
+// import styles from './card.module.css'
+import InteractiveCard from './InteractiveCard';
+import { Rating } from '@mui/material';
 
-interface Props {
-  venueName: string;
-  imgSrc: string;
-  onRatingChange: Function;
-}
+export default function Card({venueName, imgSrc, onUpdateList} : {venueName:string, imgSrc:string, onUpdateList:Function}){
+    function ratingChangeHandler(newValue: number | null) {
+        // console.log(newValue)
+        if (newValue != null) {
+            
+            onUpdateList(venueName, newValue)
+        }
+        else{
+            onUpdateList(venueName, 0)
+        }
+    }
 
-export default function Card({ venueName, imgSrc, onRatingChange }: Props) {
-  const robotId = `${venueName} Rating`;
-  return (
-    <InteractiveCard>
-      <div className="w-full rounded-t-lg overflow-hidden relative aspect-[3/2]">
-        <Image
-          src={imgSrc}
-          alt={`${venueName} image`}
-          fill
-          className="object-cover"
-        />
-      </div>
-      <div className="m-4 flex-col flex gap-2">
-        <h2 className="font-anuphan font-semibold">{venueName}</h2>
-        <Rating
-          id={robotId}
-          name={robotId}
-          data-testid={robotId}
-          defaultValue={0}
-          precision={1}
-          onClick={(event) => event.stopPropagation()}
-          onChange={(_, value) => onRatingChange(venueName, value)}
-        />
-      </div>
-    </InteractiveCard>
-  );
+    return (
+        // <div className="w-[250px] h-[300px] bg-white shadow-lg rounded-[10px] p-[5px]" onClick={() => alert("You Select" + card.venueName)}>
+        <InteractiveCard>
+            <div className='w-[250px] h-[300px] p-[5px]'>          
+                <div className="w-full h-[70%] relative">
+                    <Image src={imgSrc} 
+                        alt="Card Picture"
+                        fill={true}
+                        priority
+                        // objectFit='cover'
+                        style={{ objectFit: 'cover' }} 
+                        className="rounded-[5px] w-auto h-auto"
+                    />
+                </div>
+                <div className="h-[30%] p-[10px] space-y-2">
+                    <h4 className="font-semibold text-[16px] text-[#055D70]">"{venueName}</h4>
+                    {/* <p className="text-xs">A stunning bouquet hall where love blossoms and unforgettable memories are made.</p> */}
+                    <Rating         
+                        onChange={(event, newValue) => {
+                            ratingChangeHandler(newValue);
+                        }}
+                        onClick={(event) => {
+                            event.stopPropagation();
+                            // event.preventDefault();
+                        }}
+                        
+                        name={venueName + " Rating"}
+                        precision={1}
+                        id={venueName + " Rating"}
+                        data-testid={venueName + " Rating"}
+                    />
+                </div>
+            </div>
+        </InteractiveCard>
+        // </div>
+    )
 }

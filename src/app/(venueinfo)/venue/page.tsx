@@ -1,12 +1,9 @@
-import CardPanel from '@/components/CardPanel'
-import React from 'react'
+import CardPanel from "@/components/CardPanel";
 
-const VenuesPage = () => {
-  return (
-    <main>
-        <CardPanel />
-    </main>
-  )
+export default function page(){
+    return(
+        <div className="max-w-6xl w-full mx-auto px-4">
+          <CardPanel />
+        </div>
+    )
 }
-
-export default VenuesPage

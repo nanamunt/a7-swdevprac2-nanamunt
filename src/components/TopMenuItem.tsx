@@ -1,17 +1,17 @@
 import Link from "next/link";
-import React from "react";
 
-interface Props {
-    title: string;
-    pageRef: string;
+interface Props{
+    menuName: string;
+    link: string;
 }
 
-const TopMenuItem = ({ title, pageRef }: Props) => {
-    return (
-        <Link href={pageRef} className="text-amber-800 font-semibold hover:text-white hover:bg-orange-400 hover:shadow-md py-2 px-4 rounded-md font-jetbrains transition-all">
-            {title}
-        </Link>
-    );
-};
+export default function TopMenuItem(item:Props){
+    return(
+    <Link href={item.link} className="w-28 h-full flex items-center justify-center">
+        <div className="border hover:text-white text-[#055D70] hover:bg-neutral-200 h-5/6 w-11/12 flex items-center justify-center rounded-lg">
+            <b className="font-semibold ">{item.menuName}</b>
+        </div>       
+    </Link>
 
-export default TopMenuItem;
+    )
+}

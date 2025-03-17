@@ -1,11 +1,11 @@
 import Banner from "@/components/Banner";
-import CardPanel from "@/components/CardPanel";
 
 export default function Home() {
   return (
-    <main>
+    <main className="flex flex-col justify-between">
+      
       <Banner />
+      
     </main>
   );
 }
- 

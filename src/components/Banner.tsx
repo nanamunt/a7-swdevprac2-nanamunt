@@ -1,46 +1,35 @@
-"use client";
+"use client"
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import styles from './banner.module.css'
+import { useState } from 'react';
 
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+export default function Banner(){
+    const [index, setIndex] = useState(0);
+    const covers: string[] = ["/img/cover.jpg", "/img/cover2.jpg", "/img/cover3.jpg", "/img/cover4.jpg",];
+    const router = useRouter();
 
-export default function Banner() {
-  const bannerList: string[] = ["cover", "cover2", "cover3", "cover4"];
-  const [banner, setBanner] = useState<number>(0);
-  const router = useRouter();
-
-  return (
-    <div className="flex m-0 w-full h-[60vh] relative justify-center items-center">
-      <Image
-        src={`/img/${bannerList[banner]}.jpg`}
-        alt="event hero background"
-        fill
-        objectFit="cover"
-        priority
-        className="block w-full h-full object-cover brightness-50"
-        onClick={() =>
-          setBanner((prevBanner) => (prevBanner + 1) % bannerList.length)
-        }
-      />
-      <div className="flex flex-col justify-center gap-4 items-center w-[75%] h-full m-16 z-10 pointer-events-none">
-        <h1 className="text-white p-0 m-0 font-ubuntu text-center text-5xl">
-          where every event finds its venue
-        </h1>
-        <h2 className="font-jetbrains text-base text-gray-100">
-          ■ Discover the perfect space for every occasion — simple, fast, and
-          tailored to your needs.
-        </h2>
-      </div>
-
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          router.push("/venue");
-        }}
-        className="absolute bottom-4 right-4 py-2 px-4 rounded-lg text-white font-jetbrains bg-[rgba(255,255,255,0.1)] backdrop-blur-sm backdrop-saturate-100 border-solid border-[1px] border-[rgba(255,255,255,0.2)] hover:border-[3px] transition-all duration-75"
-      >
-        Select Venue
-      </button>
-    </div>
-  );
+    return(
+        <div className={styles.banner}>
+            <Image src={covers[index%4]} 
+                alt="Cover"
+                fill={true}
+                priority
+                // objectFit='cover'
+                style={{ objectFit: 'cover' }}
+                onClick={()=>setIndex(index+1)}
+                className='hover:cursor-pointer'
+            />
+            <div className={styles.bannerText}>
+                <h1 className='text-3xl font-bold'>where every event finds its venue</h1>
+                <h3 className='text-lg font-semibold'>Finding the perfect venue has never been easier. Whether it's a wedding, corporate event, or private party, we connecting people to the perfect place.</h3>
+            </div>
+            <button className="bg-white text-[#055D70] border border-[#055D70] 
+                font-semibold py-2 px-2 m-3 rounded-lg z-30 absolute 
+                bottom-0 right-0 hover:bg-[#055D70] hover:text-white 
+                hover:border-transparent" onClick={(e) => {e.stopPropagation; router.push("/venue")}}>
+                Select Venue
+            </button>
+        </div>
+    );
 }
